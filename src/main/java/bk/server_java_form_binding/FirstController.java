@@ -42,12 +42,14 @@ public class FirstController  {
             
             // Lưu file
             String fileName = file.getOriginalFilename();
-            String uploadPath = UPLOAD_DIR + "/" + fileName;
+            String uploadPath = UPLOAD_DIR + "/images/" + fileName;
             file.transferTo(new File(uploadPath));
-            System.out.println("Upload path: " + uploadPath);
+
             
             // Lưu đường dẫn truy cập file
-            newProduct.setIconUrl("/product/images/" + fileName);
+            newProduct.setIconUrl("/images/" + fileName);
+
+            System.out.println("Upload path: " + uploadPath);
         }
         return "addProduct";
     }
@@ -55,7 +57,7 @@ public class FirstController  {
     @GetMapping("/images/{fileName:.+}")
     @ResponseBody
     public ResponseEntity<byte[]> getImage(@PathVariable String fileName) throws IOException {
-        File file = new File(UPLOAD_DIR + "/" + fileName);
+        File file = new File(UPLOAD_DIR + "/images/" + fileName);
         if (!file.exists()) {
             return ResponseEntity.notFound().build();
         }
